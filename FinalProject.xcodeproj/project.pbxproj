@@ -12,6 +12,9 @@
 		1C6E96EF22656BED00987BCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C6E96ED22656BED00987BCF /* Main.storyboard */; };
 		1C6E96F122656BEE00987BCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C6E96F022656BEE00987BCF /* Assets.xcassets */; };
 		1C6E96F422656BEE00987BCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C6E96F222656BEE00987BCF /* LaunchScreen.storyboard */; };
+		1CCF6B6B226C901200B36235 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCF6B6A226C901200B36235 /* DetailVC.swift */; };
+		1CCF6B6D226C955100B36235 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCF6B6C226C955100B36235 /* Subject.swift */; };
+		1CCF6B6F226C969700B36235 /* Subjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCF6B6E226C969700B36235 /* Subjects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		1C6E96F022656BEE00987BCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C6E96F322656BEE00987BCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C6E96F522656BEE00987BCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1CCF6B6A226C901200B36235 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
+		1CCF6B6C226C955100B36235 /* Subject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		1CCF6B6E226C969700B36235 /* Subjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subjects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +61,10 @@
 			isa = PBXGroup;
 			children = (
 				1C6E96E922656BED00987BCF /* AppDelegate.swift */,
+				1CCF6B6C226C955100B36235 /* Subject.swift */,
+				1CCF6B6E226C969700B36235 /* Subjects.swift */,
 				1C6E96EB22656BED00987BCF /* ViewController.swift */,
+				1CCF6B6A226C901200B36235 /* DetailVC.swift */,
 				1C6E96ED22656BED00987BCF /* Main.storyboard */,
 				1C6E96F022656BEE00987BCF /* Assets.xcassets */,
 				1C6E96F222656BEE00987BCF /* LaunchScreen.storyboard */,
@@ -135,8 +144,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CCF6B6D226C955100B36235 /* Subject.swift in Sources */,
 				1C6E96EC22656BED00987BCF /* ViewController.swift in Sources */,
 				1C6E96EA22656BED00987BCF /* AppDelegate.swift in Sources */,
+				1CCF6B6B226C901200B36235 /* DetailVC.swift in Sources */,
+				1CCF6B6F226C969700B36235 /* Subjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
