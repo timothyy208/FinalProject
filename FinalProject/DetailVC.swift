@@ -41,14 +41,14 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DCell", for: indexPath)
-        print("HI")
+        let cell = tableView.cellForRow(at: indexPath)!
         if cell.textLabel?.text == subject.words[indexPath.row] {
             cell.textLabel?.text = subject.def[indexPath.row]
         } else {
             cell.textLabel?.text = subject.words[indexPath.row]
         }
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        
     }
+    
 
 }
