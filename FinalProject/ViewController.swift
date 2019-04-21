@@ -20,9 +20,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        subjects.subjectArray.append(Subject(name:"Ecology and Evolution", words:["mitochondria","vestigial trait"], def: ["powerhouse","useless"]))
-        subjects.subjectArray.append(Subject(name:"Psychology", words:["iq","eq"], def: ["intelligent","emotional"]))
-        subjects.subjectArray.append(Subject(name:"Japanese", words:["Namae","gohan"], def: ["name","rice"]))
+        subjects.subjectArray.append(Subject(name:"Ecology and Evolution", words:["mitochondria","vestigial trait"], def: ["powerhouse","useless"], currentlyDisplayingWord: true))
+        subjects.subjectArray.append(Subject(name:"Psychology", words:["iq","eq"], def: ["intelligent","emotional"], currentlyDisplayingWord: true))
+        subjects.subjectArray.append(Subject(name:"Japanese", words:["Namae","gohan"], def: ["name","rice"], currentlyDisplayingWord: true))
         tableView.delegate = self
         tableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         }
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
             let textField = alert?.textFields![0].text
-            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: []))
+            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], currentlyDisplayingWord: true))
             self.tableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -87,18 +87,31 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return subjects.subjectArray.count
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            subjects.subjectArray.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-        
-    }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let subjectToMove = subjects.subjectArray[sourceIndexPath.row]
         subjects.subjectArray.remove(at: sourceIndexPath.row)
         subjects.subjectArray.insert(subjectToMove, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: {(action, indexPath) in
+            let alert = UIAlertController(title: "", message: "Edit Subject", preferredStyle: .alert)
+            alert.addTextField(configurationHandler: { (textField) in textField.text = self.subjects.subjectArray[indexPath.row].name
+
+            })
+            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: {(updateAction) in
+                self.subjects.subjectArray[indexPath.row].name = (alert.textFields?.first?.text)!
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: false)
+        })
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            self.subjects.subjectArray.remove(at: indexPath.row)
+            tableView.reloadData()
+        })
+        return [deleteAction, editAction]
     }
 }
 

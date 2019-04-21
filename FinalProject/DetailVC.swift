@@ -59,6 +59,10 @@ class DetailVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    
+    @IBAction func presentButtonClicked(_ sender: UIBarButtonItem) {
+    }
+    
 
 }
 extension DetailVC: UITableViewDataSource, UITableViewDelegate {
@@ -73,21 +77,16 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)!
-        if cell.textLabel?.text == subject.words[indexPath.row] {
+        if subject.currentlyDisplayingWord == true{
             cell.textLabel?.text = subject.def[indexPath.row]
+            subject.currentlyDisplayingWord = false
         } else {
             cell.textLabel?.text = subject.words[indexPath.row]
+            subject.currentlyDisplayingWord = true
         }
         
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            subject.def.remove(at: indexPath.row)
-            subject.words.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-        
-    }
+
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let wordToMove = subject.words[sourceIndexPath.row]
@@ -97,7 +96,39 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
         subject.words.insert(wordToMove, at: destinationIndexPath.row)
         subject.def.insert(defToMove, at: destinationIndexPath.row)
     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let editAction = UITableViewRowAction(style: .default, title: "Edit", handler: {(action, indexPath) in
+            let alertMessage = self.subject.currentlyDisplayingWord == true ? "Edit Word" : "Edit Definition"
+            let alert = UIAlertController(title: "", message: alertMessage, preferredStyle: .alert)
+            alert.addTextField(configurationHandler: { (textField) in
+                if self.subject.currentlyDisplayingWord == true {
+                    textField.text = self.subject.words[indexPath.row]
+                } else {
+                    textField.text = self.subject.def[indexPath.row]
+                }
+                
+            })
+            alert.addAction(UIAlertAction(title: "Update", style: .default, handler: {(updateAction) in
+                if self.subject.currentlyDisplayingWord == true {
+                    self.subject.words[indexPath.row] = (alert.textFields?.first?.text)!
+                } else {
+                    self.subject.def[indexPath.row] = (alert.textFields?.first?.text)!
+                }
+                self.tableView.reloadRows(at: [indexPath], with: .fade)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: false)
+        })
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
+            self.subject.words.remove(at: indexPath.row)
+            self.subject.def.remove(at: indexPath.row)
+            tableView.reloadData()
+        })
+        return [deleteAction, editAction]
+    }
 }
+
 
 extension UIAlertController {
     func isValidWord(_ word: String) -> Bool {

@@ -12,6 +12,7 @@ struct Subject {
     var name = ""
     var words = [String]()
     var def = [String]()
+    var currentlyDisplayingWord = true
     
     
 }
