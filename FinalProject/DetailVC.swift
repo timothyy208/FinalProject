@@ -30,6 +30,7 @@ class DetailVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+
         loadDataDetailVC()
         if subject.def.count == 0 {
             presentButton.isEnabled = false

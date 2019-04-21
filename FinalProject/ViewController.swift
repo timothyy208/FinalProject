@@ -34,12 +34,14 @@ class ViewController: UIViewController {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(subjects.subjectArray) {
             defaultsData.set(encoded, forKey: "subjectArray")
-            print("saved")
+            
         } else {
             print("error saving")
         }
         
     }
+    
+    
     
     func loadData() {
         if let savedData = defaultsData.object(forKey: "subjectArray") as? Data {
@@ -48,7 +50,7 @@ class ViewController: UIViewController {
                 subjects.subjectArray = data
             }
         }
-        print("loaded")
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -126,9 +128,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
             })
             alert.addAction(UIAlertAction(title: "Update", style: .default, handler: {(updateAction) in
+                let old = self.subjects.subjectArray[indexPath.row]
+                var oldData = Subject()
+                if let savedData = self.defaultsData.object(forKey: old.name) as? Data {
+                    let decoder = JSONDecoder()
+                    if let data = try? decoder.decode(Subject.self, from: savedData) {
+                        oldData = data
+                    }
+                }
                 self.subjects.subjectArray[indexPath.row].name = (alert.textFields?.first?.text)!
                 self.tableView.reloadRows(at: [indexPath], with: .fade)
                 self.saveData()
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(oldData) {
+                    self.defaultsData.set(encoded, forKey: (alert.textFields?.first?.text)!)
+                } else {
+                    print("error saving")
+                }
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: false)
