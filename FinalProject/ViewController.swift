@@ -15,17 +15,39 @@ class ViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     var subjects = Subjects()
-    //let a = Subject(name:"dog",words:["dog":"dog"])
     
+    
+    var defaultsData = UserDefaults.standard
+    var firstBoot = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        subjects.subjectArray.append(Subject(name:"Ecology and Evolution", words:["mitochondria","vestigial trait"], def: ["powerhouse","useless"], currentlyDisplayingWord: true))
-        subjects.subjectArray.append(Subject(name:"Psychology", words:["iq","eq"], def: ["intelligent","emotional"], currentlyDisplayingWord: true))
-        subjects.subjectArray.append(Subject(name:"Japanese", words:["Namae","gohan"], def: ["name","rice"], currentlyDisplayingWord: true))
+        
+//        subjects.subjectArray.append(Subject(name:"Psychology", words:["iq","eq"], def: ["intelligent","emotional"], currentlyDisplayingWord: true))
+//        subjects.subjectArray.append(Subject(name:"Japanese", words:["Namae","gohan"], def: ["name","rice"], currentlyDisplayingWord: true))
         tableView.delegate = self
         tableView.dataSource = self
+        loadData()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func saveData() {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(subjects.subjectArray) {
+            defaultsData.set(encoded, forKey: "subjectArray")
+        } else {
+            print("error saving")
+        }
+        
+    }
+    
+    func loadData() {
+        if let savedData = defaultsData.object(forKey: "subjectArray") as? Data {
+            let decoder = JSONDecoder()
+            if let data = try? decoder.decode([Subject].self, from: savedData) {
+                subjects.subjectArray = data
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -70,7 +92,7 @@ class ViewController: UIViewController {
         okAction.isEnabled = false
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
-        
+        saveData()
     }
     
 }
@@ -92,6 +114,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let subjectToMove = subjects.subjectArray[sourceIndexPath.row]
         subjects.subjectArray.remove(at: sourceIndexPath.row)
         subjects.subjectArray.insert(subjectToMove, at: destinationIndexPath.row)
+        saveData()
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -111,6 +134,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             self.subjects.subjectArray.remove(at: indexPath.row)
             tableView.reloadData()
         })
+        saveData()
         return [deleteAction, editAction]
     }
 }

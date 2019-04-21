@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Subject {
+struct Subject: Codable{
     var name = ""
     var words = [String]()
     var def = [String]()

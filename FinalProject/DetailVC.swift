@@ -60,7 +60,15 @@ class DetailVC: UIViewController {
     }
     
     
-    @IBAction func presentButtonClicked(_ sender: UIBarButtonItem) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PresentQuiz" {
+            let destination = segue.destination as! Presentation
+            destination.subject = subject
+        } else {
+            if let selectedPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: selectedPath, animated: false)
+            }
+        }
     }
     
 
