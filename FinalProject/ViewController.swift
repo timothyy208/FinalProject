@@ -55,6 +55,16 @@ class ViewController: UIViewController {
     
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "Add Subject", message: "Enter Subject Name Here", preferredStyle: .alert)
+        alert.addTextField {(textField) in textField.text = ""}
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
+            let textField = alert?.textFields![0]
+            self.subjects.subjectArray.append(Subject(name:(textField?.text)!, words: [], def: []))
+            self.tableView.reloadData()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
 }
