@@ -55,14 +55,20 @@ class ViewController: UIViewController {
     
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Add Subject", message: "Enter Subject Name Here", preferredStyle: .alert)
-        alert.addTextField {(textField) in textField.text = ""}
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
-            let textField = alert?.textFields![0]
-            self.subjects.subjectArray.append(Subject(name:(textField?.text)!, words: [], def: []))
+        let alert = UIAlertController(title: "Add Subject", message: "", preferredStyle: .alert)
+        alert.addTextField {
+            $0.placeholder = "Enter Subject Here"
+            $0.addTarget(alert, action: #selector(alert.subjectDidChange), for: .editingChanged)
+            
+        }
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
+            let textField = alert?.textFields![0].text
+            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: []))
             self.tableView.reloadData()
-        }))
+        })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        okAction.isEnabled = false
+        alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
         
     }
@@ -73,6 +79,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = subjects.subjectArray[indexPath.row].name
+        cell.textLabel?.numberOfLines = 0
         return cell
     }
     
@@ -92,5 +99,19 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let subjectToMove = subjects.subjectArray[sourceIndexPath.row]
         subjects.subjectArray.remove(at: sourceIndexPath.row)
         subjects.subjectArray.insert(subjectToMove, at: destinationIndexPath.row)
+    }
+}
+
+extension UIAlertController {
+    func isValidSubject(_ subject: String) -> Bool {
+        return subject.count > 0
+    }
+    
+    @objc func subjectDidChange() {
+        if let subject = textFields?[0].text{
+            let action = actions.last
+            action!.isEnabled = isValidSubject(subject)
+            
+        }
     }
 }
