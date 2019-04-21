@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var subjects = Subjects()
     //let a = Subject(name:"dog",words:["dog":"dog"])
@@ -36,9 +38,25 @@ class ViewController: UIViewController {
                 tableView.deselectRow(at: selectedPath, animated: false)
             }
         }
+        
     }
+    
+    @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+            editButton.title = "Edit"
+            addButton.isEnabled = true
+        } else {
+            tableView.setEditing(true, animated: true)
+            editButton.title = "Done"
+            addButton.isEnabled = false
+        }
+    }
+    
 
-
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+    }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -47,7 +65,22 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = subjects.subjectArray[indexPath.row].name
         return cell
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return subjects.subjectArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            subjects.subjectArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let subjectToMove = subjects.subjectArray[sourceIndexPath.row]
+        subjects.subjectArray.remove(at: sourceIndexPath.row)
+        subjects.subjectArray.insert(subjectToMove, at: destinationIndexPath.row)
     }
 }
