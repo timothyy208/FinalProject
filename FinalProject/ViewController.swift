@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     
     
     var defaultsData = UserDefaults.standard
-    var firstBoot = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +34,7 @@ class ViewController: UIViewController {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(subjects.subjectArray) {
             defaultsData.set(encoded, forKey: "subjectArray")
+            print("saved")
         } else {
             print("error saving")
         }
@@ -48,6 +48,7 @@ class ViewController: UIViewController {
                 subjects.subjectArray = data
             }
         }
+        print("loaded")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -86,13 +87,14 @@ class ViewController: UIViewController {
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
             let textField = alert?.textFields![0].text
             self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], currentlyDisplayingWord: true))
+            self.saveData()
             self.tableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         okAction.isEnabled = false
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
-        saveData()
+        
     }
     
 }
@@ -126,15 +128,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             alert.addAction(UIAlertAction(title: "Update", style: .default, handler: {(updateAction) in
                 self.subjects.subjectArray[indexPath.row].name = (alert.textFields?.first?.text)!
                 self.tableView.reloadRows(at: [indexPath], with: .fade)
+                self.saveData()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: false)
         })
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
             self.subjects.subjectArray.remove(at: indexPath.row)
+            self.saveData()
             tableView.reloadData()
         })
-        saveData()
+
         return [deleteAction, editAction]
     }
 }

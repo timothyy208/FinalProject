@@ -13,13 +13,49 @@ class DetailVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var presentButton: UIBarButtonItem!
+    
     
     var subject = Subject()
+    var defaultsData = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        loadDataDetailVC()
+        if subject.def.count == 0 {
+            presentButton.isEnabled = false
+        }
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        loadDataDetailVC()
+        if subject.def.count == 0 {
+            presentButton.isEnabled = false
+            editButton.isEnabled = false
+        } else {
+            presentButton.isEnabled = true
+            editButton.isEnabled = true
+        }
+    }
+    
+    func saveDataDetailVC() {
+        let encoder = JSONEncoder()
+        guard let encodedName = try? encoder.encode(subject) else {return}
+        defaultsData.set(encodedName, forKey: "\(subject.name)")
+    }
+    
+    func loadDataDetailVC() {
+        let decoder = JSONDecoder()
+        guard let saved = defaultsData.object(forKey: "\(subject.name)") as? Data else {return}
+        if let data = try? decoder.decode(Subject.self, from: saved) {
+            subject.name = data.name
+            subject.words = data.words
+            subject.def = data.def
+            subject.currentlyDisplayingWord = false
+        }
+
     }
     
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
@@ -52,11 +88,19 @@ class DetailVC: UIViewController {
             self.subject.def.append(definition!)
             self.subject.words.append(word!)
             self.tableView.reloadData()
+            self.saveDataDetailVC()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         okAction.isEnabled = false
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
+        if subject.def.count == 0 {
+            presentButton.isEnabled = false
+            editButton.isEnabled = false
+        } else {
+            presentButton.isEnabled = true
+            editButton.isEnabled = true
+        }
     }
     
     
@@ -70,6 +114,8 @@ class DetailVC: UIViewController {
             }
         }
     }
+    
+    
     
 
 }
@@ -103,6 +149,7 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
         subject.def.remove(at: sourceIndexPath.row)
         subject.words.insert(wordToMove, at: destinationIndexPath.row)
         subject.def.insert(defToMove, at: destinationIndexPath.row)
+        saveDataDetailVC()
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -123,7 +170,8 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
                 } else {
                     self.subject.def[indexPath.row] = (alert.textFields?.first?.text)!
                 }
-                self.tableView.reloadRows(at: [indexPath], with: .fade)
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                self.saveDataDetailVC()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(alert, animated: false)
@@ -133,6 +181,13 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
             self.subject.def.remove(at: indexPath.row)
             tableView.reloadData()
         })
+        if subject.def.count == 0 {
+            presentButton.isEnabled = false
+            editButton.isEnabled = false
+        } else {
+            presentButton.isEnabled = true
+            editButton.isEnabled = true
+        }
         return [deleteAction, editAction]
     }
 }

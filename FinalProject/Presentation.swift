@@ -20,9 +20,11 @@ class Presentation: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         maxindex = subject.words.count
-        currentWord.text = subject.words[currentIndex] ?? ""
-        currentDefinition.text = subject.def[currentIndex] ?? ""
-        currentDefinition.isHidden = true
+        if maxindex > 0 {
+            currentWord.text = subject.words[currentIndex]
+            currentDefinition.text = subject.def[currentIndex]
+            currentDefinition.isHidden = true
+        }
         wordProgress.text = "\(currentIndex+1)/\(maxindex)"
         // Do any additional setup after loading the view.
     }
