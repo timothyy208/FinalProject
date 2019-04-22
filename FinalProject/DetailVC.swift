@@ -16,7 +16,7 @@ class DetailVC: UIViewController {
     @IBOutlet weak var presentButton: UIBarButtonItem!
     
     
-    var subject = Subject()
+    var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
     var defaultsData = UserDefaults.standard
     override func viewDidLoad() {
 
@@ -27,6 +27,8 @@ class DetailVC: UIViewController {
         loadDataDetailVC()
         if subject.def.count == 0 {
             presentButton.isEnabled = false
+        } else {
+            presentButton.isEnabled = true
         }
         // Do any additional setup after loading the view.
     }
@@ -57,7 +59,10 @@ class DetailVC: UIViewController {
             subject.words = data.words
             subject.def = data.def
             subject.currentlyDisplayingWord = false
+            subject.documentID = data.documentID
+            subject.postingUserID = data.postingUserID
         }
+        tableView.reloadData()
 
     }
     
@@ -70,6 +75,17 @@ class DetailVC: UIViewController {
             tableView.setEditing(true, animated: true)
             editButton.title = "Done"
             addButton.isEnabled = false
+        }
+    }
+    
+    func buttonStatus() {
+        print("in")
+        if subject.def.count == 0 {
+            presentButton.isEnabled = false
+            editButton.isEnabled = false
+        } else {
+            presentButton.isEnabled = true
+            editButton.isEnabled = true
         }
     }
     
@@ -92,18 +108,13 @@ class DetailVC: UIViewController {
             self.subject.words.append(word!)
             self.tableView.reloadData()
             self.saveDataDetailVC()
+            self.buttonStatus()
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         okAction.isEnabled = false
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
-        if subject.def.count == 0 {
-            presentButton.isEnabled = false
-            editButton.isEnabled = false
-        } else {
-            presentButton.isEnabled = true
-            editButton.isEnabled = true
-        }
+        buttonStatus()
     }
     
     
@@ -187,15 +198,11 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
             self.subject.words.remove(at: indexPath.row)
             self.subject.def.remove(at: indexPath.row)
+            self.saveDataDetailVC()
             tableView.reloadData()
         })
-        if subject.def.count == 0 {
-            presentButton.isEnabled = false
-            editButton.isEnabled = false
-        } else {
-            presentButton.isEnabled = true
-            editButton.isEnabled = true
-        }
+        buttonStatus()
+        print("yi")
         return [deleteAction, editAction]
     }
     

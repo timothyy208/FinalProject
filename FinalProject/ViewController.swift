@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FirebaseUI
+import GoogleSignIn
+import Firebase
 
 class ViewController: UIViewController {
 
@@ -16,27 +19,43 @@ class ViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     var subjects = Subjects()
-    
+    var authUI: FUIAuth!
     
     var defaultsData = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     
-        //
-//        var add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(naviAdd))
-//        var edit = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(naviEdit))
-//        navigationItem.rightBarButtonItem = add
-//        navigationItem.leftBarButtonItem = edit
-        //
+        authUI = FUIAuth.defaultAuthUI()
+        // You need to adopt a FUIAuthDelegate protocol to receive callback
+        authUI.delegate = self
+
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.isHidden = true
         loadData()
 
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        signIn()
+        
+    }
 
+    func signIn() {
+        let providers: [FUIAuthProvider] = [
+            FUIGoogleAuth()
+            ]
+        if authUI.auth?.currentUser == nil {
+            self.authUI.providers = providers
+            present(authUI.authViewController(), animated: true, completion: nil)
+        } else {
+            tableView.isHidden = false
+        }
+        
+    }
     
     @objc func naviAdd() {
         let alert = UIAlertController(title: "Add Subject", message: "", preferredStyle: .alert)
@@ -47,7 +66,7 @@ class ViewController: UIViewController {
         }
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
             let textField = alert?.textFields![0].text
-            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], currentlyDisplayingWord: true))
+            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], disp: true, post: "", doc: ""))
             self.saveData()
             self.tableView.reloadData()
         })
@@ -81,6 +100,17 @@ class ViewController: UIViewController {
     }
     
     
+    @IBAction func logOutButton(_ sender: UIBarButtonItem) {
+        do {
+            try authUI!.signOut()
+            print("signed out")
+            signIn()
+        } catch {
+            tableView.isHidden = true
+            print("signout error")
+        }
+        
+    }
     
     func loadData() {
         if let savedData = defaultsData.object(forKey: "subjectArray") as? Data {
@@ -127,7 +157,7 @@ class ViewController: UIViewController {
         }
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
             let textField = alert?.textFields![0].text
-            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], currentlyDisplayingWord: true))
+            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], disp: true, post: "", doc: ""))
             self.saveData()
             self.tableView.reloadData()
         })
@@ -168,7 +198,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             })
             alert.addAction(UIAlertAction(title: "Update", style: .default, handler: {(updateAction) in
                 let old = self.subjects.subjectArray[indexPath.row]
-                var oldData = Subject()
+                var oldData = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
                 if let savedData = self.defaultsData.object(forKey: old.name) as? Data {
                     let decoder = JSONDecoder()
                     if let data = try? decoder.decode(Subject.self, from: savedData) {
@@ -200,6 +230,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let uploadAction = UITableViewRowAction(style: .default, title: "Upload", handler:  {(action, indexPath) in
             print("hi")
             //put firebase save datahere
+            self.subjects.subjectArray[indexPath.row].saveData {success in
+                if success {
+                    print("saved data ot firebase")
+                } else {
+                    print("error saving data")
+                }
+                
+            }
         })
 
         return [deleteAction, editAction, uploadAction]
@@ -217,5 +255,38 @@ extension UIAlertController {
             action!.isEnabled = isValidSubject(subject)
             
         }
+    }
+}
+
+extension ViewController: FUIAuthDelegate {
+    func application(_ app: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        let sourceApplication = options[UIApplication.OpenURLOptionsKey.sourceApplication] as! String?
+        if FUIAuth.defaultAuthUI()?.handleOpen(url, sourceApplication: sourceApplication) ?? false {
+            return true
+        }
+        // other URL handling goes here.
+        return false
+    }
+    
+    func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
+        // handle user and error as necessary
+        tableView.isHidden = false
+        print("signed in with \(user?.displayName ?? "")")
+    }
+    
+    func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
+        let loginVC = FUIAuthPickerViewController(authUI: authUI)
+        loginVC.view.backgroundColor = UIColor.white
+        let marginInsets: CGFloat = 16
+        let imageHeight: CGFloat = 225
+        let imageY = self.view.center.y - imageHeight
+        let logoFrame = CGRect(x: self.view.frame.origin.x + marginInsets, y: imageY, width: self.view.frame.width - (marginInsets * 2), height: imageHeight)
+        let logoImageView = UIImageView(frame: logoFrame)
+        logoImageView.image = UIImage(named: "Sprite-1")
+        logoImageView.contentMode = .scaleAspectFit
+        loginVC.view.addSubview(logoImageView)
+        
+        return loginVC
     }
 }

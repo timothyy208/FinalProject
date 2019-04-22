@@ -18,7 +18,7 @@ class Presentation: UIViewController {
     @IBOutlet weak var showButton: UIButton!
     @IBOutlet weak var titleLabel: UINavigationItem!
     
-    var subject = Subject()
+    var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
     var maxindex = 0
     var currentIndex = 0
     override func viewDidLoad() {

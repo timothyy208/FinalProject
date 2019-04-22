@@ -8,9 +8,9 @@
 
 import Foundation
 
+
 class Subjects: Codable {
     var subjectArray: [Subject] = []
-    
     
     
     

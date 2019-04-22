@@ -40,18 +40,29 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="fFB-a9-RJp"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="hA9-sf-KLU">
-                        <barButtonItem key="leftBarButtonItem" title="Edit" id="t6o-VH-Qmt">
+                        <barButtonItem key="leftBarButtonItem" title="Log Out" id="RlB-i2-mQD">
                             <connections>
-                                <action selector="editButtonPressed:" destination="BYZ-38-t0r" id="Ssf-C8-Qjo"/>
+                                <action selector="logOutButton:" destination="BYZ-38-t0r" id="Wvw-Hx-LvD"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="bbR-Y3-J6h">
-                            <connections>
-                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="rhh-KC-20Y"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Add" id="bbR-Y3-J6h">
+                                <connections>
+                                    <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="rhh-KC-20Y"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Edit" id="t6o-VH-Qmt">
+                                <connections>
+                                    <action selector="editButtonPressed:" destination="BYZ-38-t0r" id="Ssf-C8-Qjo"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addButton" destination="bbR-Y3-J6h" id="uA0-TU-hYS"/>
                         <outlet property="editButton" destination="t6o-VH-Qmt" id="5Fb-3N-OnI"/>
@@ -195,7 +206,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
-                                <rect key="frame" x="0.0" y="87" width="75" height="676"/>
+                                <rect key="frame" x="0.0" y="87" width="75" height="632"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="EB0-wl-Nqs"/>
@@ -263,6 +274,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="LD5-c2-OSN"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BDB-R1-QDx">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
