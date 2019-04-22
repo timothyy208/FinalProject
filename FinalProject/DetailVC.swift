@@ -18,31 +18,32 @@ class DetailVC: UIViewController {
     
     var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
     var defaultsData = UserDefaults.standard
+    var fromCloud = false
     override func viewDidLoad() {
 
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-
-        loadDataDetailVC()
-        if subject.def.count == 0 {
-            presentButton.isEnabled = false
+        if fromCloud {
+            addButton.isEnabled = false
+            editButton.isEnabled = false
         } else {
-            presentButton.isEnabled = true
+            addButton.isEnabled = true
+            editButton.isEnabled = true
         }
+        loadDataDetailVC()
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
-        loadDataDetailVC()
-        if subject.def.count == 0 {
-            presentButton.isEnabled = false
+        if fromCloud {
+            addButton.isEnabled = false
             editButton.isEnabled = false
         } else {
-            presentButton.isEnabled = true
+            addButton.isEnabled = true
             editButton.isEnabled = true
         }
+        loadDataDetailVC()
     }
     
     func saveDataDetailVC() {
@@ -79,7 +80,7 @@ class DetailVC: UIViewController {
     }
     
     func buttonStatus() {
-        print("in")
+
         if subject.def.count == 0 {
             presentButton.isEnabled = false
             editButton.isEnabled = false
@@ -202,7 +203,6 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
             tableView.reloadData()
         })
         buttonStatus()
-        print("yi")
         return [deleteAction, editAction]
     }
     

@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 class FirebaseDecks: UIViewController {
     var subjects = Subjects()
+    var savedIndex = 0
     var db: Firestore!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -30,6 +31,26 @@ class FirebaseDecks: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CloudToDetail" {
+            let destination = segue.destination as! DetailVC
+            let index = tableView.indexPathForSelectedRow!.row
+            destination.subject = subjects.subjectArray[index]
+            destination.fromCloud = true
+        }
+        if segue.identifier == "CloudToMain"{
+            let destination = segue.destination as! ViewController
+            //let index = tableView.indexPathForSelectedRow!.row
+            destination.saveFromCloud = subjects.subjectArray[savedIndex]
+            destination.loadFromCloud = true
+        } else {
+            if let selectedPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: selectedPath, animated: false)
+            }
+        }
+        
+    }
+    
 
     
  
@@ -40,7 +61,7 @@ class FirebaseDecks: UIViewController {
     func loadData(completed: @escaping () -> ())  {
         db.collection("subjects").addSnapshotListener { (querySnapshot, error) in
             guard error == nil else {
-                print("*** ERROR: adding the snapshot listener \(error!.localizedDescription)")
+                
                 return completed()
             }
             self.subjects.subjectArray = []
@@ -50,8 +71,8 @@ class FirebaseDecks: UIViewController {
                 let twords = sub["words"]
                 let tdef = sub["def"]
                 let tdisp = sub["display"]
-                let tpost = sub["post"]
-                let tdoc = sub["doc"]
+                let tpost = ""
+                let tdoc = ""
                 
                 let subject = Subject(name: tname as! String, words: twords as! [String], def: tdef as! [String], disp: tdisp as! Bool, post: tpost as! String, doc: tdoc as! String)
                 subject.documentID = document.documentID
@@ -72,5 +93,18 @@ extension FirebaseDecks: UITableViewDataSource,UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return subjects.subjectArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let saveAction = UITableViewRowAction(style: .default, title: "Save", handler:  {(action, indexPath) in
+            self.savedIndex = indexPath.row
+            self.performSegue(withIdentifier: "CloudToMain", sender: self)
+            
+
+            
+        })
+        
+        return [saveAction]
     }
 }

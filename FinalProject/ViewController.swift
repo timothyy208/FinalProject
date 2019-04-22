@@ -19,8 +19,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     var subjects = Subjects()
+    var saveFromCloud: Subject?
     var authUI: FUIAuth!
-    
+    var loadFromCloud = false
     var defaultsData = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -41,7 +42,28 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         signIn()
+        if loadFromCloud {
+            loadSaveFromCloud()
+            loadFromCloud = false
+        }
+        //print(saveFromCloud.name)
         
+    }
+    
+    @IBAction func unwindToMain(segue:UIStoryboardSegue) {
+        
+    }
+
+    func loadSaveFromCloud() {
+        for item in subjects.subjectArray {
+            if item.name == saveFromCloud!.name {
+                return
+            }
+        }
+        subjects.subjectArray.append(saveFromCloud!)
+        
+        tableView.reloadData()
+        //print("hi")
     }
 
     func signIn() {
@@ -127,6 +149,7 @@ class ViewController: UIViewController {
             let destination = segue.destination as! DetailVC
             let index = tableView.indexPathForSelectedRow!.row
             destination.subject = subjects.subjectArray[index]
+            destination.fromCloud = false
         } else {
             if let selectedPath = tableView.indexPathForSelectedRow {
                 tableView.deselectRow(at: selectedPath, animated: false)
@@ -290,3 +313,5 @@ extension ViewController: FUIAuthDelegate {
         return loginVC
     }
 }
+
+
