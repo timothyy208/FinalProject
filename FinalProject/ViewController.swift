@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     var subjects = Subjects()
@@ -22,12 +23,50 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        subjects.subjectArray.append(Subject(name:"Psychology", words:["iq","eq"], def: ["intelligent","emotional"], currentlyDisplayingWord: true))
-//        subjects.subjectArray.append(Subject(name:"Japanese", words:["Namae","gohan"], def: ["name","rice"], currentlyDisplayingWord: true))
+     
+        //
+//        var add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(naviAdd))
+//        var edit = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(naviEdit))
+//        navigationItem.rightBarButtonItem = add
+//        navigationItem.leftBarButtonItem = edit
+        //
+
         tableView.delegate = self
         tableView.dataSource = self
         loadData()
-        // Do any additional setup after loading the view, typically from a nib.
+
+    }
+
+    
+    @objc func naviAdd() {
+        let alert = UIAlertController(title: "Add Subject", message: "", preferredStyle: .alert)
+        alert.addTextField {
+            $0.placeholder = "Enter Subject Here"
+            $0.addTarget(alert, action: #selector(alert.subjectDidChange), for: .editingChanged)
+            
+        }
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {[weak alert] (_) in
+            let textField = alert?.textFields![0].text
+            self.subjects.subjectArray.append(Subject(name:textField!, words: [], def: [], currentlyDisplayingWord: true))
+            self.saveData()
+            self.tableView.reloadData()
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        okAction.isEnabled = false
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func naviEdit() {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+            editButton.title = "Edit"
+            addButton.isEnabled = true
+        } else {
+            tableView.setEditing(true, animated: true)
+            editButton.title = "Done"
+            addButton.isEnabled = false
+        }
     }
     
     func saveData() {
@@ -147,15 +186,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+
             self.present(alert, animated: false)
+            
         })
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete", handler: { (action, indexPath) in
             self.subjects.subjectArray.remove(at: indexPath.row)
             self.saveData()
             tableView.reloadData()
         })
+        
+        let uploadAction = UITableViewRowAction(style: .default, title: "Upload", handler:  {(action, indexPath) in
+            print("hi")
+            //put firebase save datahere
+        })
 
-        return [deleteAction, editAction]
+        return [deleteAction, editAction, uploadAction]
     }
 }
 

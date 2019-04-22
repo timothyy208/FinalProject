@@ -19,9 +19,11 @@ class DetailVC: UIViewController {
     var subject = Subject()
     var defaultsData = UserDefaults.standard
     override func viewDidLoad() {
+
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+
         loadDataDetailVC()
         if subject.def.count == 0 {
             presentButton.isEnabled = false
@@ -116,6 +118,7 @@ class DetailVC: UIViewController {
         }
     }
     
+
     
     
 
@@ -132,13 +135,17 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)!
-        if subject.currentlyDisplayingWord == true{
-            cell.textLabel?.text = subject.def[indexPath.row]
-            subject.currentlyDisplayingWord = false
-        } else {
-            cell.textLabel?.text = subject.words[indexPath.row]
-            subject.currentlyDisplayingWord = true
-        }
+        //print(cell.textLabel?.text)
+        cell.textLabel?.text = subject.currentlyDisplayingWord ? subject.def[indexPath.row] : subject.words[indexPath.row]
+        subject.currentlyDisplayingWord = subject.currentlyDisplayingWord ? false : true
+        
+//        if subject.currentlyDisplayingWord == true{
+//            cell.textLabel?.text = subject.def[indexPath.row]
+//            subject.currentlyDisplayingWord = false
+//        } else {
+//            cell.textLabel?.text = subject.words[indexPath.row]
+//            subject.currentlyDisplayingWord = true
+//        }
         
     }
 
@@ -191,6 +198,8 @@ extension DetailVC: UITableViewDataSource, UITableViewDelegate {
         }
         return [deleteAction, editAction]
     }
+    
+    
 }
 
 
