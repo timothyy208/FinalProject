@@ -23,24 +23,26 @@ class ViewController: UIViewController {
     var authUI: FUIAuth!
     var loadFromCloud = false
     var defaultsData = UserDefaults.standard
-    
+    var userName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        userName = (Auth.auth().currentUser?.uid)!
+
         authUI = FUIAuth.defaultAuthUI()
         // You need to adopt a FUIAuthDelegate protocol to receive callback
         authUI.delegate = self
-
+        signIn()
 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
-        loadData()
+        
 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        userName = (Auth.auth().currentUser?.uid)!
         signIn()
         if loadFromCloud {
             loadSaveFromCloud()
@@ -67,15 +69,20 @@ class ViewController: UIViewController {
     }
 
     func signIn() {
+        
         let providers: [FUIAuthProvider] = [
             FUIGoogleAuth()
             ]
         if authUI.auth?.currentUser == nil {
+            
             self.authUI.providers = providers
             present(authUI.authViewController(), animated: true, completion: nil)
         } else {
             tableView.isHidden = false
+            
         }
+        loadData()
+        tableView.reloadData()
         
     }
     
@@ -113,7 +120,7 @@ class ViewController: UIViewController {
     func saveData() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(subjects.subjectArray) {
-            defaultsData.set(encoded, forKey: "subjectArray")
+            defaultsData.set(encoded, forKey: "\(userName)")
             
         } else {
             print("error saving")
@@ -121,21 +128,24 @@ class ViewController: UIViewController {
         
     }
     
+
     
     @IBAction func logOutButton(_ sender: UIBarButtonItem) {
+        
         do {
             try authUI!.signOut()
+            subjects = Subjects()
             print("signed out")
             signIn()
         } catch {
             tableView.isHidden = true
             print("signout error")
         }
-        
     }
     
     func loadData() {
-        if let savedData = defaultsData.object(forKey: "subjectArray") as? Data {
+        print(userName,"adfasdf")
+        if let savedData = defaultsData.object(forKey: "\(userName)") as? Data {
             let decoder = JSONDecoder()
             if let data = try? decoder.decode([Subject].self, from: savedData) {
                 subjects.subjectArray = data
@@ -150,6 +160,7 @@ class ViewController: UIViewController {
             let index = tableView.indexPathForSelectedRow!.row
             destination.subject = subjects.subjectArray[index]
             destination.fromCloud = false
+            destination.userName = userName
         } else {
             if let selectedPath = tableView.indexPathForSelectedRow {
                 tableView.deselectRow(at: selectedPath, animated: false)
@@ -168,6 +179,7 @@ class ViewController: UIViewController {
             editButton.title = "Done"
             addButton.isEnabled = false
         }
+        
     }
     
 
@@ -296,6 +308,7 @@ extension ViewController: FUIAuthDelegate {
         // handle user and error as necessary
         tableView.isHidden = false
         print("signed in with \(user?.displayName ?? "")")
+        //userName = user?.displayName ?? ""
     }
     
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {

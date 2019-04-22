@@ -17,6 +17,7 @@ class DetailVC: UIViewController {
     
     
     var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
+    var userName = ""
     var defaultsData = UserDefaults.standard
     var fromCloud = false
     override func viewDidLoad() {
@@ -49,12 +50,12 @@ class DetailVC: UIViewController {
     func saveDataDetailVC() {
         let encoder = JSONEncoder()
         guard let encodedName = try? encoder.encode(subject) else {return}
-        defaultsData.set(encodedName, forKey: "\(subject.name)")
+        defaultsData.set(encodedName, forKey: "\(userName)-\(subject.name)")
     }
     
     func loadDataDetailVC() {
         let decoder = JSONDecoder()
-        guard let saved = defaultsData.object(forKey: "\(subject.name)") as? Data else {return}
+        guard let saved = defaultsData.object(forKey: "\(userName)-\(subject.name)") as? Data else {return}
         if let data = try? decoder.decode(Subject.self, from: saved) {
             subject.name = data.name
             subject.words = data.words
