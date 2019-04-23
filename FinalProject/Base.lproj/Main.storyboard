@@ -112,7 +112,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2dA-cK-WVe" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="ELw-An-ZUc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2020" y="1050.7389162561576"/>
+            <point key="canvasLocation" x="2964" y="1051"/>
         </scene>
         <!--DetailVC-->
         <scene sceneID="R9Y-TW-inQ">
@@ -175,7 +175,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uos-ua-AHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3954.4000000000001" y="136.69950738916256"/>
+            <point key="canvasLocation" x="4062" y="579"/>
         </scene>
         <!--Presentation-->
         <scene sceneID="3PO-fy-0zt">
@@ -195,23 +195,23 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3Y-Xw-yzo">
-                                <rect key="frame" x="82" y="221" width="210" height="210"/>
+                                <rect key="frame" x="82" y="221" width="210" height="109"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="210" id="J9T-wZ-nPQ"/>
+                                    <constraint firstAttribute="height" constant="109" id="J9T-wZ-nPQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Vw-7p-Ovd">
-                                <rect key="frame" x="300" y="88" width="75" height="725"/>
+                                <rect key="frame" x="300" y="155" width="75" height="658"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="rightButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="Msb-GZ-gNv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
-                                <rect key="frame" x="0.0" y="87" width="75" height="676"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
+                                <rect key="frame" x="0.0" y="155" width="75" height="608"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="EB0-wl-Nqs"/>
@@ -220,10 +220,9 @@
                                     <action selector="leftButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="e6w-dE-0c8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhe-pD-jA3">
-                                <rect key="frame" x="83" y="439" width="209" height="243"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.90898635790000004" green="0.90898635790000004" blue="0.90898635790000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhe-pD-jA3">
+                                <rect key="frame" x="83" y="338" width="209" height="344"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="showDefButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="c74-xO-MsA"/>
                                 </connections>
@@ -237,19 +236,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76Z-Q5-pa2">
+                                <rect key="frame" x="300" y="97" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="Sprite-4"/>
+                                <connections>
+                                    <action selector="saveButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="IhB-TY-89B"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="23c-dI-3RF" firstAttribute="top" secondItem="KmC-se-HdW" secondAttribute="topMargin" constant="-1" id="2Od-NF-mDY"/>
+                            <constraint firstItem="lzS-OT-ifx" firstAttribute="firstBaseline" secondItem="6Vw-7p-Ovd" secondAttribute="firstBaseline" id="3Zm-6U-au4"/>
                             <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="leading" secondItem="23c-dI-3RF" secondAttribute="trailing" constant="68" id="5yb-0A-nTs"/>
                             <constraint firstItem="f3Y-Xw-yzo" firstAttribute="centerX" secondItem="4Jc-Ek-Cdh" secondAttribute="centerX" id="BpG-YL-bw8"/>
                             <constraint firstItem="6Vw-7p-Ovd" firstAttribute="leading" secondItem="lzS-OT-ifx" secondAttribute="trailing" constant="8" symbolic="YES" id="F5j-OE-DHL"/>
-                            <constraint firstItem="6Vw-7p-Ovd" firstAttribute="top" secondItem="nqA-56-FLu" secondAttribute="top" id="FOi-1T-dlr"/>
+                            <constraint firstItem="6Vw-7p-Ovd" firstAttribute="top" secondItem="nqA-56-FLu" secondAttribute="top" constant="67" id="FOi-1T-dlr"/>
                             <constraint firstItem="23c-dI-3RF" firstAttribute="leading" secondItem="KmC-se-HdW" secondAttribute="leading" id="HhU-po-nBx"/>
+                            <constraint firstItem="vhe-pD-jA3" firstAttribute="leading" secondItem="23c-dI-3RF" secondAttribute="trailing" constant="8" symbolic="YES" id="JqK-5m-UyO"/>
+                            <constraint firstItem="6Vw-7p-Ovd" firstAttribute="leading" secondItem="vhe-pD-jA3" secondAttribute="trailing" constant="8" symbolic="YES" id="Jqv-dD-vj9"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="centerX" secondItem="KmC-se-HdW" secondAttribute="centerX" id="ME8-hf-o1v"/>
                             <constraint firstItem="6Vw-7p-Ovd" firstAttribute="leading" secondItem="f3Y-Xw-yzo" secondAttribute="trailing" constant="8" symbolic="YES" id="OJN-LO-kWF"/>
+                            <constraint firstItem="vhe-pD-jA3" firstAttribute="top" secondItem="f3Y-Xw-yzo" secondAttribute="bottom" constant="8" symbolic="YES" id="PYM-HH-Gb5"/>
                             <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="bottom" secondItem="nqA-56-FLu" secondAttribute="bottom" constant="3" id="R5x-1D-ylY"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="leading" secondItem="23c-dI-3RF" secondAttribute="trailing" constant="7" id="UTu-CL-AhA"/>
+                            <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="top" secondItem="vhe-pD-jA3" secondAttribute="bottom" constant="8" symbolic="YES" id="XR8-7D-qMs"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="leading" secondItem="f3Y-Xw-yzo" secondAttribute="leading" id="bwH-lQ-erm"/>
                             <constraint firstItem="f3Y-Xw-yzo" firstAttribute="top" secondItem="lzS-OT-ifx" secondAttribute="bottom" constant="8" symbolic="YES" id="hrT-M6-0Tw"/>
                             <constraint firstAttribute="trailing" secondItem="6Vw-7p-Ovd" secondAttribute="trailing" id="nse-Lf-TI5"/>
@@ -264,13 +276,14 @@
                         <outlet property="currentWord" destination="lzS-OT-ifx" id="T6L-bA-uie"/>
                         <outlet property="leftButton" destination="23c-dI-3RF" id="Ga8-Kh-V3O"/>
                         <outlet property="rightButton" destination="6Vw-7p-Ovd" id="VFh-yT-kWa"/>
+                        <outlet property="saveButton" destination="76Z-Q5-pa2" id="brg-Iz-ctb"/>
                         <outlet property="showButton" destination="vhe-pD-jA3" id="vSi-bz-D0p"/>
                         <outlet property="wordProgress" destination="4Jc-Ek-Cdh" id="6GN-Op-v8P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pz1-sr-40W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4933.6000000000004" y="136.69950738916256"/>
+            <point key="canvasLocation" x="5128.8000000000002" y="578.57142857142856"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="0cI-Np-fx4">
@@ -334,6 +347,7 @@
     <resources>
         <image name="Sprite-1" width="25" height="25"/>
         <image name="Sprite-2" width="25" height="25"/>
+        <image name="Sprite-4" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="vVB-L6-CdN"/>

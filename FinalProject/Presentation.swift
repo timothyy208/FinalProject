@@ -16,11 +16,14 @@ class Presentation: UIViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var showButton: UIButton!
-    @IBOutlet weak var titleLabel: UINavigationItem!
+    @IBOutlet weak var saveButton: UIButton!
     
+    var studyWord: [String] = []
+    var studyDef: [String] = []
     var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
     var maxindex = 0
     var currentIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         maxindex = subject.words.count
@@ -57,7 +60,35 @@ class Presentation: UIViewController {
     }
     
     @IBAction func showDefButtonPressed(_ sender: UIButton) {
+        showButton.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1)
         currentDefinition.isHidden = currentDefinition.isHidden == true ? false : true
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+            self.showButton.backgroundColor = UIColor.white
+        }
+        
+    }
+    
+    @IBAction func saveButtonPressed(_ sender: UIButton) {
+        if saveButton.imageView?.image == UIImage(named: "Sprite-4") {
+            studyDef.append(currentDefinition.text ?? "")
+            studyWord.append(currentWord.text ?? "")
+            updateSaveButtonImage()
+        } else {
+            let tIndex = studyWord.firstIndex(of: currentWord.text ?? "")
+            studyWord.remove(at: tIndex!)
+            studyDef.remove(at: tIndex!)
+            updateSaveButtonImage()
+            
+        }
+        
+    }
+    
+    func updateSaveButtonImage() {
+        if studyWord.contains(currentWord.text ?? "") {
+            saveButton.setImage(UIImage(named: "Sprite-3"), for: .normal)
+        } else {
+            saveButton.setImage(UIImage(named: "Sprite-4"), for: .normal)
+        }
     }
     
     func updateWord(_ direction: String) {

@@ -63,7 +63,7 @@ class ViewController: UIViewController {
             }
         }
         subjects.subjectArray.append(saveFromCloud!)
-        
+        saveData()
         tableView.reloadData()
         //print("hi")
     }
