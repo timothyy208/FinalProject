@@ -210,7 +210,7 @@
                                     <action selector="rightButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="Msb-GZ-gNv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
                                 <rect key="frame" x="0.0" y="155" width="75" height="608"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -244,10 +244,18 @@
                                     <action selector="saveButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="IhB-TY-89B"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHK-vM-HnW">
+                                <rect key="frame" x="23" y="97" width="52" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Quiz"/>
+                                <connections>
+                                    <action selector="quizButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="fcd-Sj-AbV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="23c-dI-3RF" firstAttribute="top" secondItem="KmC-se-HdW" secondAttribute="topMargin" constant="-1" id="2Od-NF-mDY"/>
+                            <constraint firstItem="23c-dI-3RF" firstAttribute="top" secondItem="KmC-se-HdW" secondAttribute="topMargin" constant="67" id="2Od-NF-mDY"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="firstBaseline" secondItem="6Vw-7p-Ovd" secondAttribute="firstBaseline" id="3Zm-6U-au4"/>
                             <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="leading" secondItem="23c-dI-3RF" secondAttribute="trailing" constant="68" id="5yb-0A-nTs"/>
                             <constraint firstItem="f3Y-Xw-yzo" firstAttribute="centerX" secondItem="4Jc-Ek-Cdh" secondAttribute="centerX" id="BpG-YL-bw8"/>
@@ -275,6 +283,7 @@
                         <outlet property="currentDefinition" destination="f3Y-Xw-yzo" id="obG-H3-RYN"/>
                         <outlet property="currentWord" destination="lzS-OT-ifx" id="T6L-bA-uie"/>
                         <outlet property="leftButton" destination="23c-dI-3RF" id="Ga8-Kh-V3O"/>
+                        <outlet property="quizButton" destination="LHK-vM-HnW" id="6xc-bB-77i"/>
                         <outlet property="rightButton" destination="6Vw-7p-Ovd" id="VFh-yT-kWa"/>
                         <outlet property="saveButton" destination="76Z-Q5-pa2" id="brg-Iz-ctb"/>
                         <outlet property="showButton" destination="vhe-pD-jA3" id="vSi-bz-D0p"/>

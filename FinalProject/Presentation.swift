@@ -17,13 +17,16 @@ class Presentation: UIViewController {
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var showButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var quizButton: UIButton!
     
     var studyWord: [String] = []
     var studyDef: [String] = []
     var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
     var maxindex = 0
     var currentIndex = 0
-    
+    var quiz = false
+    var quizIndex = 0
+    var quizMaxIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         maxindex = subject.words.count
@@ -39,9 +42,16 @@ class Presentation: UIViewController {
     @IBAction func rightButtonPressed(_ sender: UIButton) {
 
         rightButton.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1)
-        if currentIndex < maxindex - 1{
-            updateWord("right")
+        if quiz == false {
+            if currentIndex < maxindex - 1{
+                updateWord("right")
+            }
+        } else  {
+            if quizIndex < quizMaxIndex - 1{
+                updateWord("right")
+            }
         }
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
             self.rightButton.backgroundColor = UIColor.white
         }
@@ -51,8 +61,14 @@ class Presentation: UIViewController {
     
     @IBAction func leftButtonPressed(_ sender: UIButton) {
         leftButton.backgroundColor = UIColor(red: 232/255.0, green: 232/255.0, blue: 232/255.0, alpha: 1)
-        if currentIndex > 0 {
-            updateWord("left")
+        if quiz == false {
+            if currentIndex > 0 {
+                updateWord("left")
+            }
+        } else {
+            if quizIndex > 0  {
+                updateWord("left")
+            }
         }
         DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
             self.leftButton.backgroundColor = UIColor.white
@@ -84,26 +100,71 @@ class Presentation: UIViewController {
     }
     
     func updateSaveButtonImage() {
+
         if studyWord.contains(currentWord.text ?? "") {
             saveButton.setImage(UIImage(named: "Sprite-3"), for: .normal)
         } else {
             saveButton.setImage(UIImage(named: "Sprite-4"), for: .normal)
         }
+
     }
     
-    func updateWord(_ direction: String) {
-        if direction == "right" {
-            currentIndex += 1
-            currentWord.text = subject.words[currentIndex]
-            currentDefinition.text = subject.def[currentIndex]
-            wordProgress.text = "\(currentIndex+1)/\(maxindex)"
-            currentDefinition.isHidden = true
+    @IBAction func quizButtonPressed(_ sender: UIButton) {
+        if quiz == false{
+            quizMaxIndex = studyDef.count
+            quizIndex = 0
+            quiz = true
+            quizButton.setTitle("Exit Quiz", for: .normal)
+            saveButton.isHidden = true
+            wordProgress.isHidden = true
+            currentWord.text = studyWord[quizIndex]
+            currentDefinition.text = studyDef[quizIndex]
+            print(studyWord)
+            print(studyDef)
         } else {
-            currentIndex -= 1
+            quiz = true
+            quizButton.setTitle("Quiz", for: .normal)
+            saveButton.isHidden = false
+            //reset
             currentWord.text = subject.words[currentIndex]
             currentDefinition.text = subject.def[currentIndex]
             wordProgress.text = "\(currentIndex+1)/\(maxindex)"
+            wordProgress.isHidden = false
             currentDefinition.isHidden = true
+        }
+    }
+    
+    
+    func updateWord(_ direction: String) {
+        if quiz == false {
+            if direction == "right" {
+                currentIndex += 1
+                currentWord.text = subject.words[currentIndex]
+                currentDefinition.text = subject.def[currentIndex]
+                wordProgress.text = "\(currentIndex+1)/\(maxindex)"
+                currentDefinition.isHidden = true
+            } else {
+                currentIndex -= 1
+                currentWord.text = subject.words[currentIndex]
+                currentDefinition.text = subject.def[currentIndex]
+                wordProgress.text = "\(currentIndex+1)/\(maxindex)"
+                currentDefinition.isHidden = true
+            }
+            updateSaveButtonImage()
+        } else {
+            if direction == "right" {
+                quizIndex += 1
+                currentWord.text = studyWord[currentIndex]
+                currentDefinition.text = studyDef[currentIndex]
+                //wordProgress.text = "\(currentIndex+1)/\(maxindex)"
+                currentDefinition.isHidden = true
+            } else {
+                quizIndex -= 1
+                currentWord.text = studyWord[currentIndex]
+                currentDefinition.text = studyDef[currentIndex]
+                //wordProgress.text = "\(currentIndex+1)/\(maxindex)"
+                currentDefinition.isHidden = true
+            }
         }
     }
 }
