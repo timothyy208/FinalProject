@@ -26,13 +26,13 @@ class ViewController: UIViewController {
     var userName = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        userName = (Auth.auth().currentUser?.uid)!
+        
 
         authUI = FUIAuth.defaultAuthUI()
         // You need to adopt a FUIAuthDelegate protocol to receive callback
         authUI.delegate = self
         signIn()
-
+        userName = (Auth.auth().currentUser?.uid) ?? "guest"
         tableView.delegate = self
         tableView.dataSource = self
         tableView.isHidden = true
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        userName = (Auth.auth().currentUser?.uid)!
+        userName = (Auth.auth().currentUser?.uid) ?? "guest"
         signIn()
         if loadFromCloud {
             loadSaveFromCloud()

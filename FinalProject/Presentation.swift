@@ -30,6 +30,7 @@ class Presentation: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         maxindex = subject.words.count
+        quizButton.isEnabled = false
         if maxindex > 0 {
             currentWord.text = subject.words[currentIndex]
             currentDefinition.text = subject.def[currentIndex]
@@ -88,14 +89,19 @@ class Presentation: UIViewController {
         if saveButton.imageView?.image == UIImage(named: "Sprite-4") {
             studyDef.append(currentDefinition.text ?? "")
             studyWord.append(currentWord.text ?? "")
+            quizButton.isEnabled = true
             updateSaveButtonImage()
         } else {
             let tIndex = studyWord.firstIndex(of: currentWord.text ?? "")
             studyWord.remove(at: tIndex!)
             studyDef.remove(at: tIndex!)
+            if studyWord.count == 0{
+                quizButton.isEnabled = false
+            }
             updateSaveButtonImage()
             
         }
+
         
     }
     
@@ -114,7 +120,7 @@ class Presentation: UIViewController {
             quizMaxIndex = studyDef.count
             quizIndex = 0
             quiz = true
-            quizButton.setTitle("Exit Quiz", for: .normal)
+            quizButton.setImage(UIImage(named: "Sprite-6"), for: .normal)
             saveButton.isHidden = true
             wordProgress.isHidden = true
             currentWord.text = studyWord[quizIndex]
@@ -123,7 +129,7 @@ class Presentation: UIViewController {
             print(studyDef)
         } else {
             quiz = true
-            quizButton.setTitle("Quiz", for: .normal)
+            quizButton.setImage(UIImage(named: "Sprite-5"), for: .normal)
             saveButton.isHidden = false
             //reset
             currentWord.text = subject.words[currentIndex]
