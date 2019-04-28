@@ -128,7 +128,7 @@ class Presentation: UIViewController {
             print(studyWord)
             print(studyDef)
         } else {
-            quiz = true
+            quiz = false
             quizButton.setImage(UIImage(named: "Sprite-5"), for: .normal)
             saveButton.isHidden = false
             //reset
@@ -160,14 +160,14 @@ class Presentation: UIViewController {
         } else {
             if direction == "right" {
                 quizIndex += 1
-                currentWord.text = studyWord[currentIndex]
-                currentDefinition.text = studyDef[currentIndex]
+                currentWord.text = studyWord[quizIndex]
+                currentDefinition.text = studyDef[quizIndex]
                 //wordProgress.text = "\(currentIndex+1)/\(maxindex)"
                 currentDefinition.isHidden = true
             } else {
                 quizIndex -= 1
-                currentWord.text = studyWord[currentIndex]
-                currentDefinition.text = studyDef[currentIndex]
+                currentWord.text = studyWord[quizIndex]
+                currentDefinition.text = studyDef[quizIndex]
                 //wordProgress.text = "\(currentIndex+1)/\(maxindex)"
                 currentDefinition.isHidden = true
             }

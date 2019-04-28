@@ -322,7 +322,6 @@
         <!--Local-->
         <scene sceneID="3VR-dV-fNg">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Jhw-vh-WAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gmF-xA-aN3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Local" image="Sprite-1" id="ugo-rG-nQn"/>
                     <toolbarItems/>
@@ -335,6 +334,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="X66-4L-FIj"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jhw-vh-WAg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2021.5999999999999" y="136.69950738916256"/>
         </scene>
