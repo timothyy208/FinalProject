@@ -143,26 +143,31 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r1U-2Z-kel">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTj-kN-Bgc">
                                 <rect key="frame" x="0.0" y="734" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem title="Edit" id="rM1-Y9-bfc">
+                                    <barButtonItem title="Edit" id="Xmo-n5-Nlp">
                                         <connections>
-                                            <action selector="editButtonPressed:" destination="NFC-JI-rPi" id="mjX-A5-QhO"/>
+                                            <action selector="editButtonPressed:" destination="NFC-JI-rPi" id="YlH-xH-Ydz"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Zsg-Xj-fHE"/>
-                                    <barButtonItem title="Present" id="BMn-qC-qQN">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="YKk-Gc-Xr5"/>
+                                    <barButtonItem title="Upload" id="EvD-b0-fB3">
                                         <connections>
-                                            <action selector="presentButtonClicked:" destination="NFC-JI-rPi" id="nOj-dd-yWd"/>
-                                            <segue destination="dDM-Wg-SlF" kind="show" identifier="PresentQuiz" id="XEH-0j-eNY"/>
+                                            <action selector="uploadButtonPressed:" destination="NFC-JI-rPi" id="Zfp-ou-PuG"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ayA-ot-6Mb"/>
-                                    <barButtonItem title="Add" id="cGF-Ty-HUV">
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wW7-8T-FKh"/>
+                                    <barButtonItem title="Present" id="QKm-SU-2DR">
                                         <connections>
-                                            <action selector="addButtonPressed:" destination="NFC-JI-rPi" id="qeO-Q4-aN6"/>
+                                            <segue destination="dDM-Wg-SlF" kind="show" identifier="PresentQuiz" id="xZZ-Sb-XTb"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="rKN-dZ-WVQ"/>
+                                    <barButtonItem title="Add" id="bh1-Yb-TZi">
+                                        <connections>
+                                            <action selector="addButtonPressed:" destination="NFC-JI-rPi" id="Ruk-uA-ejc"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -172,15 +177,15 @@
                         <viewLayoutGuide key="safeArea" id="Qbl-m5-sbS"/>
                     </view>
                     <connections>
-                        <outlet property="addButton" destination="cGF-Ty-HUV" id="INU-vR-vZA"/>
-                        <outlet property="editButton" destination="rM1-Y9-bfc" id="bYC-rv-QJG"/>
-                        <outlet property="presentButton" destination="BMn-qC-qQN" id="H6A-9g-jtb"/>
+                        <outlet property="addButton" destination="bh1-Yb-TZi" id="ZhV-jh-0eP"/>
+                        <outlet property="editButton" destination="Xmo-n5-Nlp" id="BXJ-Oi-AnE"/>
+                        <outlet property="presentButton" destination="QKm-SU-2DR" id="Etc-8w-ffx"/>
                         <outlet property="tableView" destination="E9y-8j-tg7" id="eSz-Rq-wls"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uos-ua-AHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4062" y="579"/>
+            <point key="canvasLocation" x="4061.5999999999999" y="578.57142857142856"/>
         </scene>
         <!--Presentation-->
         <scene sceneID="3PO-fy-0zt">

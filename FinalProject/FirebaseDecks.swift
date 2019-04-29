@@ -74,7 +74,7 @@ class FirebaseDecks: UIViewController {
                 let tpost = ""
                 let tdoc = ""
                 
-                let subject = Subject(name: tname as! String, words: twords as! [String], def: tdef as! [String], disp: tdisp as! Bool, post: tpost , doc: tdoc as! String)
+                let subject = Subject(name: tname as! String, words: twords as! [String], def: tdef as! [String], disp: tdisp as! Bool, post: tpost , doc: tdoc )
                 subject.documentID = document.documentID
                 self.subjects.subjectArray.append(subject)
             }

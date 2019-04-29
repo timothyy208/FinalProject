@@ -27,9 +27,12 @@ class Subject: Codable{
         self.documentID = doc
     }
     
+
+    
     func saveData(completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         let dictionary = ["name":self.name, "words":self.words, "def":self.def, "display":self.currentlyDisplayingWord, "post":self.postingUserID, "doc":self.documentID] as [String : Any]
+        print(dictionary)
         guard let postingUserID = (Auth.auth().currentUser?.uid) else {
             print("*** ERROR: Could not save data because we don't have a valid postingUserID")
             return completed(false)

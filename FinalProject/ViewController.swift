@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func unwindToMain(segue:UIStoryboardSegue) {
-        
+
     }
 
     func loadSaveFromCloud() {
@@ -263,11 +263,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         let uploadAction = UITableViewRowAction(style: .default, title: "Upload", handler:  {(action, indexPath) in
-            print("hi")
+            print(self.subjects.subjectArray[indexPath.row].def)
+            print(self.subjects.subjectArray[indexPath.row].words)
             //put firebase save datahere
             self.subjects.subjectArray[indexPath.row].saveData {success in
                 if success {
                     print("saved data ot firebase")
+                    
                 } else {
                     print("error saving data")
                 }
@@ -277,6 +279,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 
         return [deleteAction, editAction, uploadAction]
     }
+
 }
 
 extension UIAlertController {

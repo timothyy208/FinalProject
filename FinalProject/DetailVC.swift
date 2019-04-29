@@ -91,6 +91,8 @@ class DetailVC: UIViewController {
         }
     }
     
+
+    
     @IBAction func addButtonPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Add Word and Definition", message: "", preferredStyle: .alert)
         alert.addTextField {
@@ -117,6 +119,17 @@ class DetailVC: UIViewController {
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
         buttonStatus()
+    }
+    @IBAction func uploadButtonPressed(_ sender: Any) {
+        subject.saveData {success in
+            if success {
+                print("saved data ot firebase")
+                
+            } else {
+                print("error saving data")
+            }
+            
+        }
     }
     
     
