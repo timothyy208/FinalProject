@@ -38,6 +38,8 @@ class DetailVC: UIViewController {
         }
         loadDataDetailVC()
         buttonStatus()
+        //print(subject.def.count)
+        //print("fromcloud",fromCloud)
         // Do any additional setup after loading the view.
     }
     
@@ -99,7 +101,7 @@ class DetailVC: UIViewController {
         } else {
             presentButton.isEnabled = true
             
-            if fromCloud == false {
+            if fromCloud  {
                 uploadBarButton.isEnabled = false
                 editButton.isEnabled = false
             }
