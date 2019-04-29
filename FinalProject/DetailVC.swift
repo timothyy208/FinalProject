@@ -29,9 +29,12 @@ class DetailVC: UIViewController {
         if fromCloud {
             addButton.isEnabled = false
             editButton.isEnabled = false
+            uploadBarButton.isEnabled = false
+            
         } else {
             addButton.isEnabled = true
             editButton.isEnabled = true
+            uploadBarButton.isEnabled = true
         }
         loadDataDetailVC()
         buttonStatus()
@@ -42,9 +45,11 @@ class DetailVC: UIViewController {
         if fromCloud {
             addButton.isEnabled = false
             editButton.isEnabled = false
+            uploadBarButton.isEnabled = false
         } else {
             addButton.isEnabled = true
             editButton.isEnabled = true
+            uploadBarButton.isEnabled = true
         }
         buttonStatus()
         loadDataDetailVC()
@@ -88,11 +93,16 @@ class DetailVC: UIViewController {
         if subject.def.count == 0 {
             presentButton.isEnabled = false
             editButton.isEnabled = false
-            uploadBarButton.isEnabled = false
+            if fromCloud == false {
+                uploadBarButton.isEnabled = false
+            }
         } else {
             presentButton.isEnabled = true
-            editButton.isEnabled = true
-            uploadBarButton.isEnabled = true
+            
+            if fromCloud == false {
+                uploadBarButton.isEnabled = false
+                editButton.isEnabled = false
+            }
         }
     }
     
@@ -126,15 +136,25 @@ class DetailVC: UIViewController {
         buttonStatus()
     }
     @IBAction func uploadButtonPressed(_ sender: Any) {
-        subject.saveData {success in
-            if success {
-                print("saved data ot firebase")
+       
+        let alertMessage = "Upload Flashcard Set"
+        let alert = UIAlertController(title: "", message: alertMessage, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: {(updateAction) in
+            self.subject.saveData {success in
+                if success {
+                    print("saved data ot firebase")
+                    
+                } else {
+                    print("error saving data")
+                }
                 
-            } else {
-                print("error saving data")
             }
-            
-        }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: false)
+        
+        
     }
     
     
