@@ -14,6 +14,7 @@ class DetailVC: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var presentButton: UIBarButtonItem!
+    @IBOutlet weak var uploadBarButton: UIBarButtonItem!
     
     
     var subject = Subject(name: "", words: [], def: [], disp: true, post: "", doc: "")
@@ -33,6 +34,7 @@ class DetailVC: UIViewController {
             editButton.isEnabled = true
         }
         loadDataDetailVC()
+        buttonStatus()
         // Do any additional setup after loading the view.
     }
     
@@ -44,6 +46,7 @@ class DetailVC: UIViewController {
             addButton.isEnabled = true
             editButton.isEnabled = true
         }
+        buttonStatus()
         loadDataDetailVC()
     }
     
@@ -85,9 +88,11 @@ class DetailVC: UIViewController {
         if subject.def.count == 0 {
             presentButton.isEnabled = false
             editButton.isEnabled = false
+            uploadBarButton.isEnabled = false
         } else {
             presentButton.isEnabled = true
             editButton.isEnabled = true
+            uploadBarButton.isEnabled = true
         }
     }
     

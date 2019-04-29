@@ -181,6 +181,7 @@
                         <outlet property="editButton" destination="Xmo-n5-Nlp" id="BXJ-Oi-AnE"/>
                         <outlet property="presentButton" destination="QKm-SU-2DR" id="Etc-8w-ffx"/>
                         <outlet property="tableView" destination="E9y-8j-tg7" id="eSz-Rq-wls"/>
+                        <outlet property="uploadBarButton" destination="EvD-b0-fB3" id="09d-O2-5UR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uos-ua-AHX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -205,9 +206,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3Y-Xw-yzo">
-                                <rect key="frame" x="82" y="221" width="210" height="109"/>
+                                <rect key="frame" x="82" y="221" width="210" height="227"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="109" id="J9T-wZ-nPQ"/>
+                                    <constraint firstAttribute="height" constant="227" id="J9T-wZ-nPQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -221,7 +222,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23c-dI-3RF">
-                                <rect key="frame" x="0.0" y="155" width="75" height="608"/>
+                                <rect key="frame" x="0.0" y="155" width="75" height="564"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="75" id="EB0-wl-Nqs"/>
@@ -231,7 +232,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhe-pD-jA3">
-                                <rect key="frame" x="83" y="338" width="209" height="344"/>
+                                <rect key="frame" x="83" y="462" width="209" height="220"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="showDefButtonPressed:" destination="dDM-Wg-SlF" eventType="touchUpInside" id="c74-xO-MsA"/>
@@ -276,7 +277,7 @@
                             <constraint firstItem="6Vw-7p-Ovd" firstAttribute="leading" secondItem="vhe-pD-jA3" secondAttribute="trailing" constant="8" symbolic="YES" id="Jqv-dD-vj9"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="centerX" secondItem="KmC-se-HdW" secondAttribute="centerX" id="ME8-hf-o1v"/>
                             <constraint firstItem="6Vw-7p-Ovd" firstAttribute="leading" secondItem="f3Y-Xw-yzo" secondAttribute="trailing" constant="8" symbolic="YES" id="OJN-LO-kWF"/>
-                            <constraint firstItem="vhe-pD-jA3" firstAttribute="top" secondItem="f3Y-Xw-yzo" secondAttribute="bottom" constant="8" symbolic="YES" id="PYM-HH-Gb5"/>
+                            <constraint firstItem="vhe-pD-jA3" firstAttribute="top" secondItem="f3Y-Xw-yzo" secondAttribute="bottom" constant="14" id="PYM-HH-Gb5"/>
                             <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="bottom" secondItem="nqA-56-FLu" secondAttribute="bottom" constant="3" id="R5x-1D-ylY"/>
                             <constraint firstItem="lzS-OT-ifx" firstAttribute="leading" secondItem="23c-dI-3RF" secondAttribute="trailing" constant="7" id="UTu-CL-AhA"/>
                             <constraint firstItem="4Jc-Ek-Cdh" firstAttribute="top" secondItem="vhe-pD-jA3" secondAttribute="bottom" constant="8" symbolic="YES" id="XR8-7D-qMs"/>
@@ -370,6 +371,6 @@
         <image name="Sprite-5" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vVB-L6-CdN"/>
+        <segue reference="asL-Jr-way"/>
     </inferredMetricsTieBreakers>
 </document>

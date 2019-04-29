@@ -262,22 +262,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.reloadData()
         })
         
-        let uploadAction = UITableViewRowAction(style: .default, title: "Upload", handler:  {(action, indexPath) in
-            print(self.subjects.subjectArray[indexPath.row].def)
-            print(self.subjects.subjectArray[indexPath.row].words)
-            //put firebase save datahere
-            self.subjects.subjectArray[indexPath.row].saveData {success in
-                if success {
-                    print("saved data ot firebase")
-                    
-                } else {
-                    print("error saving data")
-                }
-                
-            }
-        })
 
-        return [deleteAction, editAction, uploadAction]
+
+        return [deleteAction, editAction]
     }
 
 }
@@ -322,7 +309,7 @@ extension ViewController: FUIAuthDelegate {
         let imageY = self.view.center.y - imageHeight
         let logoFrame = CGRect(x: self.view.frame.origin.x + marginInsets, y: imageY, width: self.view.frame.width - (marginInsets * 2), height: imageHeight)
         let logoImageView = UIImageView(frame: logoFrame)
-        logoImageView.image = UIImage(named: "Sprite-1")
+        logoImageView.image = UIImage(named: "logo")
         logoImageView.contentMode = .scaleAspectFit
         loginVC.view.addSubview(logoImageView)
         
